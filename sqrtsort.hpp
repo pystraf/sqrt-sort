@@ -20,22 +20,22 @@ namespace sqrtsort {
 		template<typename It>
 		using iter_value = typename std::iterator_traits<It>::value_type;
 
-		template<typename It, typename Comp>
-		int sort_cmp(It a, It b, Comp comp) {
+		template<typename It, typename It2, typename Comp>
+		int sort_cmp(It a, It2 b, Comp comp) {
 			if (comp(*a, *b)) return -1;
 			else if (comp(*b, *a)) return 1;
 			else return 0;
 		}
 
-		template<typename It>
-		inline void sqrtsort_swap1(It a, It b) {
+		template<typename It, typename It2>
+		inline void sqrtsort_swap1(It a, It2 b) {
 			iter_value<It> c = *a;
 			*a++ = *b;
 			*b++ = c;
 		}
 
-		template<typename It>
-		inline void sqrtsort_swapN(It a, It b, int n) {
+		template<typename It, typename It2>
+		inline void sqrtsort_swapN(It a, It2 b, int n) {
 			while (n--) sqrtsort_swap1(a++, b++);
 		}
 
@@ -67,8 +67,8 @@ namespace sqrtsort {
 		}
 
 		// arr[0,L1-1] ++ arr2[0,L2-1] -> arr[-L1,L2-1],  arr2 is "before" arr1
-		template<typename It, typename Comp>
-		static void sqrtsort_MergeDown(It arr, It arr2, int L1, int L2, Comp comp) {
+		template<typename It, typename It2, typename Comp>
+		static void sqrtsort_MergeDown(It arr, It2 arr2, int L1, int L2, Comp comp) {
 			int p0 = 0, p1 = 0, M = -L2;
 
 			while (p1 < L2) {
@@ -290,4 +290,3 @@ namespace sqrtsort {
 		sqrtsort(first, last, std::less<_internal::iter_value<RandomAccessIterator>>());
 	}
 }
-
